@@ -18,7 +18,7 @@ async def me(user: UserDep) -> UserResponse:
 @router.get("/users")
 async def users(
     user: AdminUserDep,  # noqa: ARG001
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> UserListResponse:
     users = user_repository.get_all()
 
@@ -36,7 +36,7 @@ async def users(
 async def get_user(
     user: AdminUserDep,  # noqa: ARG001
     user_id: Annotated[str, Path(alias="id")],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> UserResponse:
     target_user = user_repository.get(user_id)
 
@@ -67,7 +67,7 @@ async def update_user(
     data: UserUpdateRequest,
     user: UserDep,
     user_id: Annotated[str, Path(alias="id")],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> UserResponse:
     if not user.is_admin and user.id != user_id:
         raise HTTPException(
@@ -116,7 +116,7 @@ async def update_user(
 async def delete_user(
     user: AdminUserDep,
     user_id: Annotated[str, Path(alias="id")],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> None:
     target_user = user_repository.get(user_id)
 

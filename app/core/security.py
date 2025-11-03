@@ -74,7 +74,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 
 def current_user(
     token: Annotated[HTTPAuthorizationCredentials, Depends(bearer_auth_scheme)],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> User | None:
     payload = verify_token(token.credentials)
 
@@ -89,7 +89,7 @@ def current_user(
 
 def current_verified_user(
     token: Annotated[HTTPAuthorizationCredentials, Depends(bearer_auth_scheme)],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> User | None:
     payload = verify_token(token.credentials)
 
@@ -104,7 +104,7 @@ def current_verified_user(
 
 def admin_user(
     token: Annotated[HTTPAuthorizationCredentials, Depends(bearer_auth_scheme)],
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> User | None:
     payload = verify_token(token.credentials)
 

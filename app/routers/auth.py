@@ -34,7 +34,7 @@ router = APIRouter(tags=["login"])
 )
 async def signup(
     data: SignUpRequest,
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> None:
     user = user_repository.get_by_email(data.email)
 
@@ -70,7 +70,7 @@ async def signup(
 )
 async def login(
     data: LoginRequest,
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> LoginResponse:
     user = user_repository.get_by_email(data.email)
 
@@ -130,7 +130,7 @@ async def refresh(
 async def verify(
     data: VerifyRequest,
     user: UserDep,
-    user_repository: UserRepository = Depends(use_cache=True),
+    user_repository: UserRepository = Depends(),
 ) -> None:
     if user.verification_key == data.key:
         user.verified = True
